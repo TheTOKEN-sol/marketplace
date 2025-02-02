@@ -19,9 +19,11 @@
     "blo": "^1.2.0",
     "framer-motion": "^11.2.10",
     "next": "14.2.4",
+    "owl.carousel": "^2.3.4",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
+    "react-owl-carousel": "^2.3.3",
     "thirdweb": "^5.75.0"
   },
   "devDependencies": {

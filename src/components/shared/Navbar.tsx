@@ -34,7 +34,7 @@ export function Navbar() {
   const wallet = useActiveWallet();
   const { colorMode } = useColorMode();
   return (
-    <Box py="30px" px={{ base: "20px", lg: "50px" }}>
+    <Box py="10px" px={{ base: "20px", lg: "50px" }}>
       <Flex direction="row" justifyContent="space-between">
         <Box my="auto">
           <Heading
@@ -57,7 +57,7 @@ export function Navbar() {
             <ConnectButton
               client={client}
               theme={colorMode}
-              connectButton={{ style: { height: "56px" } }}
+              connectButton={{ style: { height: "46px" } }}
             />
           )}
         </Box>
