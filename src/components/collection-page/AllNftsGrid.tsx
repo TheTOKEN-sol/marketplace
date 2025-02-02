@@ -10,7 +10,6 @@ import {
   useBreakpointValue,
   Text,
   Button,
-  Select,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import {
@@ -26,32 +25,42 @@ export function AllNftsGrid() {
   const [itemsPerPage, setItemsPerPage] = useState<number>(20);
   const [currentPageIndex, setCurrentPageIndex] = useState<number>(0);
   const { nftContract, type, supplyInfo } = useMarketplaceContext();
+
+  // Validate and calculate pagination
   const startTokenId = supplyInfo?.startTokenId ?? 0n;
   const totalItems: bigint = supplyInfo
     ? supplyInfo.endTokenId - supplyInfo.startTokenId + 1n
     : 0n;
-  const numberOfPages: number = Number(
-    (totalItems + BigInt(itemsPerPage) - 1n) / BigInt(itemsPerPage)
-  );
-  const pages: { start: number; count: number }[] = [];
 
+  const numberOfPages: number =
+    totalItems > 0n
+      ? Number((totalItems + BigInt(itemsPerPage) - 1n) / BigInt(itemsPerPage))
+      : 1;
+
+  const pages: { start: number; count: number }[] = [];
   for (let i = 0; i < numberOfPages; i++) {
     const currentStartTokenId = startTokenId + BigInt(i * itemsPerPage);
     const remainingItems = totalItems - BigInt(i * itemsPerPage);
     const count =
-      remainingItems < BigInt(itemsPerPage)
-        ? Number(remainingItems)
-        : itemsPerPage;
-    pages.push({ start: Number(currentStartTokenId), count: count });
+      remainingItems < BigInt(itemsPerPage) ? Number(remainingItems) : itemsPerPage;
+    pages.push({ start: Number(currentStartTokenId), count });
   }
+
+  // Ensure currentPageIndex is valid
+  const validPageIndex = currentPageIndex < pages.length ? currentPageIndex : 0;
+  const currentPage = pages[validPageIndex] ?? { start: 0, count: 0 };
+
+  // Fetch NFT data
   const { data: allNFTs } = useReadContract(
     type === "ERC1155" ? getNFTs1155 : getNFTs721,
     {
       contract: nftContract,
-      start: pages[currentPageIndex].start,
-      count: pages[currentPageIndex].count,
+      start: currentPage.start,
+      count: currentPage.count,
     }
   );
+
+  // Ensure columns variable is defined correctly
   const len = allNFTs?.length ?? 0;
   const columns = useBreakpointValue({
     base: 1,
@@ -59,9 +68,10 @@ export function AllNftsGrid() {
     md: Math.min(len, 4),
     lg: Math.min(len, 4),
     xl: Math.min(len, 5),
-  });
+  }) ?? 1; // Ensure a default value for safety
 
   console.log({ pages, currentPageIndex, length: pages.length });
+
   return (
     <>
       <SimpleGrid columns={columns} spacing={4} p={4} mx="auto" mt="20px">
@@ -71,9 +81,7 @@ export function AllNftsGrid() {
               key={item.id}
               rounded="12px"
               as={Link}
-              href={`/collection/${nftContract.chain.id}/${
-                nftContract.address
-              }/token/${item.id.toString()}`}
+              href={`/collection/${nftContract.chain.id}/${nftContract.address}/token/${item.id.toString()}`}
               _hover={{ textDecoration: "none" }}
             >
               <Flex direction="column">
@@ -86,54 +94,46 @@ export function AllNftsGrid() {
           <Box mx="auto">Loading...</Box>
         )}
       </SimpleGrid>
-      <Box
-        mx="auto"
-        maxW={{ base: "90vw", lg: "700px" }}
-        mt="20px"
-        px="10px"
-        py="5px"
-        overflowX="auto"
-      >
-        <Flex direction="row" justifyContent="center" gap="3">
-          <Button
-            onClick={() => setCurrentPageIndex(0)}
-            isDisabled={currentPageIndex === 0}
-          >
-            <MdKeyboardDoubleArrowLeft />
-          </Button>
-          <Button
-            isDisabled={currentPageIndex === 0}
-            onClick={() => setCurrentPageIndex(currentPageIndex - 1)}
-          >
-            <RiArrowLeftSLine />
-          </Button>
-          <Text my="auto">
-            Page {currentPageIndex + 1} of {pages.length}
-          </Text>
-          <Button
-            isDisabled={currentPageIndex === pages.length - 1}
-            onClick={() => setCurrentPageIndex(currentPageIndex + 1)}
-          >
-            <RiArrowRightSLine />
-          </Button>
-          <Button
-            onClick={() => setCurrentPageIndex(pages.length - 1)}
-            isDisabled={currentPageIndex === pages.length - 1}
-          >
-            <MdKeyboardDoubleArrowRight />
-          </Button>
-          {/* <Select
-            w="80px"
-            onChange={(e) => setItemsPerPage(Number(e.target.value))}
-          >
-            {[20, 40, 60].map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </Select> */}
-        </Flex>
-      </Box>
+      {pages.length > 0 && (
+        <Box
+          mx="auto"
+          maxW={{ base: "90vw", lg: "700px" }}
+          mt="20px"
+          px="10px"
+          py="5px"
+          overflowX="auto"
+        >
+          <Flex direction="row" justifyContent="center" gap="3">
+            <Button
+              onClick={() => setCurrentPageIndex(0)}
+              isDisabled={currentPageIndex === 0}
+            >
+              <MdKeyboardDoubleArrowLeft />
+            </Button>
+            <Button
+              isDisabled={currentPageIndex === 0}
+              onClick={() => setCurrentPageIndex(currentPageIndex - 1)}
+            >
+              <RiArrowLeftSLine />
+            </Button>
+            <Text my="auto">
+              Page {currentPageIndex + 1} of {pages.length}
+            </Text>
+            <Button
+              isDisabled={currentPageIndex === pages.length - 1}
+              onClick={() => setCurrentPageIndex(currentPageIndex + 1)}
+            >
+              <RiArrowRightSLine />
+            </Button>
+            <Button
+              onClick={() => setCurrentPageIndex(pages.length - 1)}
+              isDisabled={currentPageIndex === pages.length - 1}
+            >
+              <MdKeyboardDoubleArrowRight />
+            </Button>
+          </Flex>
+        </Box>
+      )}
     </>
   );
 }

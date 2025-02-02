@@ -41,12 +41,12 @@ export function Navbar() {
             as={Link}
             href="/"
             _hover={{ textDecoration: "none" }}
-            bgGradient="linear(to-l, #7928CA, #FF0080)"
+            bgGradient="linear(to-l,rgb(40, 202, 99),rgb(183, 255, 0))"
             bgClip="text"
             fontWeight="extrabold"
           >
             {/* Replace this with your own branding */}
-            THIRDMART
+            Pengu Art
           </Heading>
         </Box>
         <Box display={{ lg: "block", base: "none" }}>
