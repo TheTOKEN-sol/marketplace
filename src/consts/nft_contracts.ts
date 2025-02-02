@@ -36,11 +36,5 @@ export const NFT_CONTRACTS: NftContract[] = [
     thumbnailUrl: "/nftcollections/abstracthotdogs.png",  // Corrected path for public folder usage
     type: "ERC721",
   },
-  {
-    address: "0x516DC288e26b34557f68EA1c1Ff13576Eff8a168",
-    chain: abstract,
-    title: "Bearish",
-    thumbnailUrl: "/nftcollections/bearish.png",  // Corrected path for public folder usage
-    type: "ERC721",
-  },
+
 ];
