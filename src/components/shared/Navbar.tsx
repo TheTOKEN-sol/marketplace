@@ -37,17 +37,23 @@ export function Navbar() {
     <Box py="10px" px={{ base: "20px", lg: "50px" }}>
       <Flex direction="row" justifyContent="space-between">
         <Box my="auto">
-          <Heading
-            as={Link}
-            href="/"
-            _hover={{ textDecoration: "none" }}
-            bgGradient="linear(to-l,rgb(40, 202, 99),rgb(183, 255, 0))"
-            bgClip="text"
-            fontWeight="extrabold"
-          >
-            {/* Replace this with your own branding */}
-            Pengu Art
-          </Heading>
+        <Heading
+          as={Link}
+          href="/"
+          _hover={{ textDecoration: "none" }}
+          fontWeight="extrabold"
+        >
+          {/* "Pengu Art" with gradient */}
+          <Box as="span" bgGradient="linear(to-l,rgb(40, 202, 99),rgb(183, 255, 0))" bgClip="text">
+            Pengu Art: 
+          </Box>
+          
+          {/* "v1" in white */}
+          <Box as="span" color="white">
+            v1
+          </Box>
+        </Heading>
+
         </Box>
         <Box display={{ lg: "block", base: "none" }}>
           <ToggleThemeButton />

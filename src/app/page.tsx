@@ -1,29 +1,15 @@
+
 "use client";
 
 import { NFT_CONTRACTS } from "@/consts/nft_contracts";
 import { Link } from "@chakra-ui/next-js";
-import {
-  Box,
-  Card,
-  CardBody,
-  CardHeader,
-  Flex,
-  Heading,
-  Image,
-  Stack,
-  StackDivider,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Image, Text } from "@chakra-ui/react";
 
 export default function Home() {
   return (
     <Flex>
       <Box mt="24px" m="auto">
         <Flex direction="column" gap="4">
-          
-          <Heading ml="20px" mt="40px">
-            Trending collections
-          </Heading>
           <Flex
             direction="row"
             wrap="wrap"
@@ -32,18 +18,44 @@ export default function Home() {
             justifyContent="space-evenly"
           >
             {NFT_CONTRACTS.map((item) => (
-              <Link
+              <Box
+                as={Link}
                 _hover={{ textDecoration: "none" }}
-                w={300}
-                h={400}
                 key={item.address}
                 href={`/collection/${item.chain.id.toString()}/${item.address}`}
+                role="group" // Important for hover effect to work
+                textAlign="center"
               >
-                <Image src={item.thumbnailUrl} />
-                <Text fontSize="large" mt="10px">
-                  {item.title}
-                </Text>
-              </Link>
+                <Box position="relative" w="50px" h="50px" m="auto">
+                  {/* Image */}
+                  <Image
+                    src={item.thumbnailUrl}
+                    boxSize="50px"
+                    borderRadius="full"
+                  />
+
+                  {/* Tooltip (Appears Below) */}
+                  <Text
+                    position="absolute"
+                    top="100%"
+                    left="50%"
+                    transform="translateX(-50%)"
+                    bg="rgba(0, 0, 0, 0.7)"
+                    color="white"
+                    p="4px 8px"
+                    borderRadius="4px"
+                    fontSize="12px"
+                    mt="4px"
+                    whiteSpace="nowrap"
+                    opacity="0"
+                    transition="opacity 0.2s ease-in-out"
+                    pointerEvents="none"
+                    _groupHover={{ opacity: 1 }}
+                  >
+                    {item.title}
+                  </Text>
+                </Box>
+              </Box>
             ))}
           </Flex>
         </Flex>
@@ -51,41 +63,3 @@ export default function Home() {
     </Flex>
   );
 }
-
-// Delete this in your own app
-const _latestUpdates: Array<{ title: string; bullet_points: string[] }> = [
-  {
-    title: "Latest software",
-    bullet_points: [
-      "Shipped with the latest thirdweb SDK (v5) and Next.js 14 (App router)",
-    ],
-  },
-  {
-    title: "Multi-chain",
-    bullet_points: [
-      "Seamlessly trade and browse items on multiple chains",
-      "You'd have to deploy a thirdweb Marketplace V3 contract on each of the chains you want to support",
-    ],
-  },
-  {
-    title: "Multiple collections supported",
-    bullet_points: [
-      "The new template now supports multiple collections, you can view your owned NFTs and your listings",
-    ],
-  },
-  {
-    title: "Upcoming features",
-    bullet_points: [
-      "Select different currencies (ERC20) when creating listings",
-      "UI for English Auctions",
-    ],
-  },
-  {
-    title: "Contribute",
-    bullet_points: [
-      "We welcome all contributions from the community.",
-      "Found a bug or have some suggestions? Create a GitHub issue!",
-      "Repo: https://github.com/thirdweb-example/marketplace-template",
-    ],
-  },
-];
