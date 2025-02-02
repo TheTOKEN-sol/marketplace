@@ -8,12 +8,12 @@ import { Box, Flex, Image, Text } from "@chakra-ui/react";
 export default function Home() {
   return (
     <Flex>
-      <Box mt="24px" m="auto">
+      <Box mt="14px" m="auto">
         <Flex direction="column" gap="4">
           <Flex
             direction="row"
             wrap="wrap"
-            mt="20px"
+            mt="10px"
             gap="5"
             justifyContent="space-evenly"
           >
