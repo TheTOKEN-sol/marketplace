@@ -56,7 +56,7 @@ export function Navbar() {
 
         </Box>
         <Box display={{ lg: "block", base: "none" }}>
-          <ToggleThemeButton />
+        
           {account && wallet ? (
             <ProfileButton address={account.address} wallet={wallet} />
           ) : (
