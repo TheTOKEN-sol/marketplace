@@ -60,7 +60,12 @@ export function CreateListing(props: Props) {
     icon: NATIVE_TOKEN_ICON_MAP[chain.id] || "",
   };
 
-  const options: Token[] = [nativeToken].concat(supportedTokens);
+  const options: Token[] = [...supportedTokens, nativeToken].sort((a, b) => {
+  if (a.symbol === "PENGU") return -1;
+  if (b.symbol === "PENGU") return 1;
+  if (a.tokenAddress === NATIVE_TOKEN_ADDRESS) return 1; // Ensure native ETH is last
+  return 0;
+});
 
   return (
     <>

@@ -16,6 +16,13 @@ export type NftContract = {
 
 export const NFT_CONTRACTS: NftContract[] = [
   {
+    address: "0x39af431902B46c33C3866dc7C5ac2fb29f606b73",
+    chain: abstract,
+    title: "Refreshmints Market Shares",
+    thumbnailUrl: "/nftcollections/marketshares.png",  // Corrected path for public folder usage
+    type: "ERC721",
+  },
+  {
     address: "0xb47a26df28923bc826100256e7d5fa01cd0817a7",
     chain: abstract,
     title: "Derplets",
@@ -36,5 +43,4 @@ export const NFT_CONTRACTS: NftContract[] = [
     thumbnailUrl: "/nftcollections/abstracthotdogs.png",  // Corrected path for public folder usage
     type: "ERC721",
   },
-
 ];

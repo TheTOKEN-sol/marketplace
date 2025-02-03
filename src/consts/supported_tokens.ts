@@ -29,6 +29,11 @@ export const SUPPORTED_TOKENS: SupportedTokens[] = [
         symbol: "PENGU",
         icon: "/erc20-icons/pengu.png",
       },
+      {
+        tokenAddress: "0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1",
+        symbol: "USDCe",
+        icon: "/erc20-icons/usdc.png",
+      },
 
       // Add more ERC20 here...
     ],
