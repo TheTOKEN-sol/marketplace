@@ -34,11 +34,16 @@ export const SUPPORTED_TOKENS: SupportedTokens[] = [
         symbol: "USDCe",
         icon: "/erc20-icons/usdc.png",
       },
+      {
+        tokenAddress: "0x3439153eb7af838ad19d56e1571fbd09333c2809",
+        symbol: "WETH",
+        icon: "/erc20-icons/weth.png",
+      },
 
       // Add more ERC20 here...
     ],
   },
-
+  
 ];
 
 export const NATIVE_TOKEN_ICON_MAP: { [key in Chain["id"]]: string } = {
